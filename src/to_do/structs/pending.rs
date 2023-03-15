@@ -12,7 +12,7 @@ impl Pending {
     pub fn new(input_title: &str) -> Self {
         let base = Base {
             title: input_title.to_string(),
-            status: TaskStatus::PENDING,
+            status: TaskStatus::Pending,
         };
         Self { super_struct: base }
     }
