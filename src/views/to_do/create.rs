@@ -22,5 +22,5 @@ pub async fn create(token: JwToken, req: HttpRequest, mut db: DB) -> HttpRespons
             .values(&new_post)
             .execute(&mut db.connection);
     }
-    HttpResponse::Ok().json(ToDoItems::get_state((token.user_id)))
+    HttpResponse::Ok().json(ToDoItems::get_state(token.user_id))
 }

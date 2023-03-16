@@ -9,6 +9,7 @@ use crate::jwt::JwToken;
 use crate::models::item::item::Item;
 use crate::schema::to_do;
 
+#[allow(dead_code)]
 pub async fn delete(to_do_item: web::Json<ToDoItem>, token: JwToken, mut db: DB) -> HttpResponse {
     let items = to_do::table
         .filter(to_do::columns::title.eq(&to_do_item.title.as_str()))

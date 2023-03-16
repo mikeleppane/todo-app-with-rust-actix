@@ -23,8 +23,7 @@ impl JwToken {
 
     pub fn encode(self) -> String {
         let key = EncodingKey::from_secret(JwToken::get_key().as_ref());
-        let token = encode(&Header::default(), &self, &key).unwrap();
-        return token;
+        encode(&Header::default(), &self, &key).unwrap()
     }
 
     pub fn new(user_id: i32) -> Self {
@@ -47,7 +46,7 @@ impl JwToken {
             Ok(data) => Ok(data.claims),
             Err(error) => {
                 let message = format!("{}", error);
-                return Err(message);
+                Err(message)
             }
         }
     }

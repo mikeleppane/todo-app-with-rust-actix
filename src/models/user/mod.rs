@@ -1,2 +1,3 @@
 pub mod new_user;
-pub(crate) mod user;
+#[allow(clippy::module_inception)]
+pub mod user;

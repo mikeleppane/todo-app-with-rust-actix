@@ -36,10 +36,6 @@ lazy_static! {
     };
 }
 
-pub fn establish_connection() -> PooledConnection<ConnectionManager<PgConnection>> {
-    DBCONNECTION.db_connection.get().unwrap()
-}
-
 impl FromRequest for DB {
     type Error = Error;
     type Future = Ready<Result<DB, Error>>;
