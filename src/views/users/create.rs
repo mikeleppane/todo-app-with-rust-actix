@@ -17,7 +17,7 @@ pub async fn create(new_user: web::Json<NewUserSchema>, mut db: DB) -> impl Resp
         .values(&new_user)
         .execute(&mut db.connection);
     match insert_result {
-        Ok(_) => HttpResponse::Created(),
-        Err(_) => HttpResponse::Conflict(),
+        Ok(_) => HttpResponse::Created().await.unwrap(),
+        Err(_) => HttpResponse::Conflict().await.unwrap(),
     }
 }

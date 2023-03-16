@@ -5,7 +5,7 @@ use diesel::prelude::*;
 use diesel::QueryDsl;
 use serde::Serialize;
 
-use crate::database::establish_connection;
+use crate::database::DBCONNECTION;
 use crate::diesel;
 use crate::models::item::item::Item;
 use crate::schema::to_do;
@@ -40,10 +40,11 @@ impl ToDoItems {
             done_items: done_array_buffer,
         }
     }
-    pub fn get_state() -> ToDoItems {
-        let mut connection = establish_connection();
+    pub fn get_state(user_id: i32) -> ToDoItems {
+        let mut connection = DBCONNECTION.db_connection.get().unwrap();
         let mut array_buffer = Vec::new();
         let items = to_do::table
+            .filter(to_do::columns::user_id.eq(&user_id))
             .order(to_do::columns::id.asc())
             .load::<Item>(&mut connection)
             .unwrap();
