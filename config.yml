@@ -1,2 +1,0 @@
-DB_URL: postgres://username:password@localhost:5454/to_do
-SECRET_KEY: "#!WTF1234?%& -- tämä on sellainen erittäin salainen salasana, jota ei voi arvata. Edes isoin supertietokone koko maailmassa."
