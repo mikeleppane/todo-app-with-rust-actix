@@ -11,7 +11,7 @@ the next section). After that simply run
 the following command:
 
 ```
-docker-compose run
+docker-compose up -d
 ``` 
 
 ## Used Technologies
