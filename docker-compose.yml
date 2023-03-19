@@ -1,17 +1,39 @@
-version: "3.7"
+version: "3.8"
 services:
+  backend:
+    container_name: 'to-do-actix'
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+    env_file:
+      - .env
+    ports:
+      - '8000:8000'
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
   postgres:
-    container_name: 'to-do-postgres'
-    image: 'postgres:15.2'
-    restart: always
+    container_name: backend-db
+    image: postgres:15.2
+    restart: on-failure
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
     ports:
       - '5454:5432'
-    environment:
-      - 'POSTGRES_USER=username'
-      - 'POSTGRES_DB=to_do'
-      - 'POSTGRES_PASSWORD=password'
+    env_file:
+      - .env
+    healthcheck:
+      test: [ "CMD-SHELL", "sh -c 'pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}'" ]
+      retries: 5
+      interval: 60s
+      start_period: 20s
+      timeout: 10s
   redis:
     container_name: 'to-do-redis'
     image: 'redis:5.0.14'
     ports:
       - '6379:6379'
+volumes:
+  postgres_data:
