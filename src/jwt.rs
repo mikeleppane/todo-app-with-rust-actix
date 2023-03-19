@@ -1,3 +1,5 @@
+use std::env;
+
 use actix_web::dev::Payload;
 use actix_web::error::ErrorUnauthorized;
 use actix_web::{Error, FromRequest, HttpRequest};
@@ -16,9 +18,7 @@ pub struct JwToken {
 
 impl JwToken {
     pub fn get_key() -> String {
-        let config = Config::new();
-        let key_str = config.map.get("SECRET_KEY").unwrap().as_str().unwrap();
-        key_str.to_owned()
+        env::var("SECRET_KEY").expect("SECRET_KEY environment variable is not defined!")
     }
 
     pub fn encode(self) -> String {
